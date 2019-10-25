@@ -950,32 +950,58 @@ prime_array = sorted([
 ,104309,104311,104323,104327,104347,104369,104381,104383,104393,104399
 ,104417,104459,104471,104473,104479,104491,104513,104527,104537,104543
 ,104549,104551,104561,104579,104593,104597,104623,104639,104651,104659
-,104677,104681,104683,104693,104701,104707,104711,104717,104723,10472
+,104677,104681,104683,104693,104701,104707,104711,104717,104723,104729
 ], reverse=True)
 
-re_size = []
+
 def divide(val):
+    re_size = []
     for pri in prime_array:
         if val%pri == 0:
             re_size.append({
-                "pri": pri,
-                "part": val/pri
-                #"count":,0
+                "size": int(pri),
+                "chunck": int(val/pri)
             })
             break
             #divide(val/pri)
+    return re_size[0]
+
+
+def verify_size_content(re_size):
+    """[We just need to make sure the number of size never > content per chunk]
+
+    Arguments:
+        re_size {[type]} -- [description]
+
+    Returns:
+        [type] -- [description]
+    """
+    to_alternate = 0
+    if re_size['chunck'] < re_size['size']:
+        to_alternate = re_size['chunck']
+        re_size['chunck'] = re_size['size']
+        re_size['size'] = to_alternate
+    return re_size
 
 
 with open("./file.png","rb") as image_file:
-    encoded_string = b64.b64encode(image_file.read())
-    base64_val = encoded_string.decode('utf-8')
-    size = len(base64_val)
-    to_divide = 1
-    divide(size)
-    #,for,i,in,range(0,,len(re_size)):
-    #,,for,element,in,re_size:
-    #,,,if,re_size[i]['pri'],==,element['pri']:
-    #,,,,,re_size[i]['count']+=1
+    _string = b64.b64encode(image_file.read()).decode('utf-8')
+    size = len(_string)
+    re_size = verify_size_content(divide(size))
 
-    print("SIZE:," ,size)
-    print("re_size:," ,re_size)
+    print("SIZE: " ,size)
+    print("CONTENT_PER_CHUNKCS: " ,re_size['chunck'])
+    print("COUNT_OF_CHUNCK: " ,re_size['size'])
+
+    to_print = _string
+    print("to_print: ", to_print)
+    with open("./initial_chunck.sp","w+") as file:
+        file.write(to_print)
+
+    for i in range(0, re_size['size']):
+        content = to_print[:re_size['chunck']]
+        with open("./"+str(i)+"_chunck.sp","w+") as file:
+            print("Writing in : "+ "./"+str(i)+"_chunck.sp")
+            file.write(content)
+            print("content: ", content)
+        to_print.replace(content, "")
