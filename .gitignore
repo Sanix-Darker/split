@@ -1,2 +1,6 @@
 *__pycache__
 .history
+*.mp4
+*.avi
+*.flv
+*.mkv
