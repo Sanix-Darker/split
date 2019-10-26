@@ -5,8 +5,6 @@
 *.flv
 *.mkv
 *.sp
-*.png
 *.jpg
 *.gif
-chunks/*
 *node_modules*
