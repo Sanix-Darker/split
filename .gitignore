@@ -5,3 +5,4 @@
 *.flv
 *.mkv
 *.sp
+chunks/*
