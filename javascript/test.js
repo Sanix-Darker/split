@@ -1,23 +1,10 @@
-import Codec from "./Split"
+import Split from "./Split"
 
-let cc = new Codec()
+let s = new Split("../data_test/file.png", true)
 
-cc.setCodecApiUrl("http://127.0.0.1:7171")
+// We decompose the file in multiple chunks
+s.deCompose()
 
-cc.getMessage("PAC005", "fr").then(message => {
-    console.log("getMessage: ", message)
-})
-
-cc.getDescription("PAC004", "fr").then(message => {
-    console.log("getDescription: ", message)
-})
-
-cc.getMicroservice("PAC004").then(message => {
-    console.log("getMicroservice: ", message)
-})
-
-cc.isException("PAC004").then(message => {
-    console.log("isException: ", message)
-})
-
+// We can print the map of the file
+console.log(s.getMap())
 // console.log("cc.map: ", cc.map)

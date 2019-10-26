@@ -1,10 +1,12 @@
 import fs from "fs";
+import B64 from "./mabase64"
+import prime_array_list from "./primes"
+let md5 = require("./md5.js")
 
-import prime_array from "primes"
-
+const prime_array = prime_array_list()
 class Split {
 
-    constructor(FILENAME, MAXIMUM_SIZE_PER_CHUNK = 300000, MINIMUM_NUMBER_OF_CHUNK = 3, DEBUG_MODE = False) {
+    constructor(FILENAME, DEBUG_MODE = false, MAXIMUM_SIZE_PER_CHUNK = 300000, MINIMUM_NUMBER_OF_CHUNK = 3) {
         this.DEBUG_MODE = DEBUG_MODE
         this.FILENAME = FILENAME
         this.MAXIMUM_SIZE_PER_CHUNK = MAXIMUM_SIZE_PER_CHUNK
@@ -82,13 +84,12 @@ class Split {
 
         let ancien_pri = 9999999
         let ancien_chunck = 0
-
         for(let i =0; i<prime_array.length; i++){
-            pri = prime_array[i]
+            const pri = prime_array[i]
             if (val%pri == 0){
-                if (pri.parseInt() >= this.MINIMUM_NUMBER_OF_CHUNK && pri.parseInt() <= ancien_pri && (val/pri).parseInt() < this.MAXIMUM_SIZE_PER_CHUNK){
-                    ancien_pri = pri.parseInt()
-                    ancien_chunck = (val/pri).parseInt()
+                if (pri >= this.MINIMUM_NUMBER_OF_CHUNK && pri <= ancien_pri && (val/pri) < this.MAXIMUM_SIZE_PER_CHUNK){
+                    ancien_pri = pri
+                    ancien_chunck = (val/pri)
                     this.split_print({ "size": ancien_pri, "chunck": ancien_chunck })
                     break
                 }
@@ -117,6 +118,10 @@ class Split {
     }
 
 
+    //fs.readFileSync(this.json_file_path))
+    //fs.writeFileSync(this.json_file_path, JSON.stringify(this.CodeObject))
+    //fs.writeFile("out.png", base64Data, 'base64', function(err) { console.log(err); });
+
     // """[This method reconstruct the file]
 
     // Arguments:
@@ -127,56 +132,58 @@ class Split {
     reMake(final_path, map_, chunk_path, delete_residuals=false){
         this.split_print("[+] Remake started...")
         try{
-            file_content_string =""
-            for i in range(0, len(map_)):
-                file_content_string += open(chunk_path+map_[i], "r").read()
-                if delete_residuals == True: remove(chunk_path+map_[i])
-            file_content=b64.b64decode(file_content_string)
-            with open(final_path,"wb") as f:
-                f.write(file_content)
-            self.split_print("[+] Remake done.")
+            let file_content_string =""
+            for(let i=0; i<map_.length; i++){
+                file_content_string += fs.readFileSync(chunk_path+map_[i])
+                if (delete_residuals == true){
+                    fs.unlinkSync(chunk_path+map_[i])
+                }
+            }
+            let file_content=new B64().b64decode(file_content_string)
+            fs.writeFile(final_path, file_content, 'base64', function(err) { console.log(err); });
+            this.split_print("[+] Remake done.")
         }catch(err){
-            console.log(e)
+            console.log(err)
             this.split_print("[+] Remake went wrong.")
         }
     }
 
 
 
+    // """[This method decompose the file]
+    // """
+    deCompose(){
+        this.split_print("[+] Decompose started...")
+        let to_print = fs.readFileSync(this.FILENAME).toString('base64')
+        let size = to_print.length
+        let re_size_val = this.divide(size)
+        let re_size = this.verify_size_content(re_size_val)
 
-    def deCompose(self):
-        """[This method decompose the file]
-        """
-        self.split_print("[+] Decompose started...")
-        with open(self.FILENAME,"rb") as image_file:
-            to_print = b64.b64encode(image_file.read()).decode('utf-8')
-            size = len(to_print)
-            re_size_val = self.divide(size)
-            re_size = self.verify_size_content(re_size_val)
+        this.split_print("[+] SIZE: " +size)
+        this.split_print("[+] RE_SIZE: ")
+        this.split_print(re_size_val)
+        this.split_print("[+] CONTENT_PER_CHUNKCS: " +re_size['chunck'])
+        this.split_print("[+] COUNT_OF_CHUNCK: " +re_size['size'])
 
-            self.split_print("[+] SIZE: " +str(size))
-            self.split_print("[+] RE_SIZE: " +str(re_size_val))
-            self.split_print("[+] CONTENT_PER_CHUNKCS: " +str(re_size['chunck']))
-            self.split_print("[+] COUNT_OF_CHUNCK: " +str(re_size['size']))
+        let content = ""
+        let i = 0
+        let array_to_print = to_print.match(new RegExp(".{1,"+re_size['chunck']+"}", "g"))
 
-            content = ""
-            i = 0
-            while to_print:
-                content += to_print[:re_size['chunck']]
-                title = md5(content[:10].encode()).hexdigest()
-                self.map[i] = title
-                self.chunk_array.append({title: content})
-                self.split_print("> chunck: "+title)
-                # Optionnal, to saved the chunks
-                with open("../chunks/"+title,"w+") as file:
-                    print("Writing in : "+ "../chunks/"+title)
-                    file.write(content)
-                # Optionnal, to saved the chunks
-                to_print = to_print[re_size['chunck']:]
-                content = ""
-                i += 1
-            self.split_print("[+] Decompose done.")
-            self.split_print("-------")
+        for (let i=0;i<array_to_print.length; i++){
+            content = array_to_print[i]
+            let title = md5(content.substring(0,10))
+            this.map[i] = title
+            this.chunk_array.push({title: content})
+            this.split_print("> chunck: "+title)
+            // Optionnal, to saved the chunks
+            fs.writeFileSync("../chunks/"+title, content)
+            console.log("Writing in : "+ "../chunks/"+title)
+            // Optionnal, to saved the chunks
+        }
+        this.split_print("[+] Decompose done.")
+        this.split_print("-------")
+    }
+
 }
 
 export default Split;

@@ -5,7 +5,7 @@ from os import remove
 
 class Split:
 
-    def __init__(self, FILENAME, MAXIMUM_SIZE_PER_CHUNK = 300000, MINIMUM_NUMBER_OF_CHUNK = 3, DEBUG_MODE = False):
+    def __init__(self, FILENAME, DEBUG_MODE = False, MAXIMUM_SIZE_PER_CHUNK = 300000, MINIMUM_NUMBER_OF_CHUNK = 3):
         self.DEBUG_MODE = DEBUG_MODE
         self.FILENAME = FILENAME
         self.MAXIMUM_SIZE_PER_CHUNK = MAXIMUM_SIZE_PER_CHUNK
@@ -137,7 +137,7 @@ class Split:
             content = ""
             i = 0
             while to_print:
-                content += to_print[:re_size['chunck']]
+                content = to_print[:re_size['chunck']]
                 title = md5(content[:10].encode()).hexdigest()
                 self.map[i] = title
                 self.chunk_array.append({title: content})
@@ -148,7 +148,6 @@ class Split:
                     file.write(content)
                 # Optionnal, to saved the chunks
                 to_print = to_print[re_size['chunck']:]
-                content = ""
                 i += 1
             self.split_print("[+] Decompose done.")
             self.split_print("-------")
