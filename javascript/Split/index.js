@@ -166,16 +166,14 @@ class Split {
         let size = to_print.length
         let re_size_val = this.divide(size)
         let re_size = this.verify_size_content(re_size_val)
+        let content = ""
+        let array_to_print = to_print.match(new RegExp(".{1,"+re_size['chunck']+"}", "g"))
 
         this.split_print("[+] SIZE: " +size)
 
-        let content = ""
-        let i = 0
-        let array_to_print = to_print.match(new RegExp(".{1,"+re_size['chunck']+"}", "g"))
-
         for (let i=0;i<array_to_print.length; i++){
             content = array_to_print[i]
-            let title = md5(content.substring(0,10))
+            let title = md5(content.substring(0,300))
             this.map[i] = title
             this.chunk_array.push({title: content})
             this.split_print("> chunck: "+title)

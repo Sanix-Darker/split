@@ -135,14 +135,14 @@ class Split:
             size = len(to_print)
             re_size_val = self.divide(size)
             re_size = self.verify_size_content(re_size_val)
+            content = ""
+            i = 0
 
             self.split_print("[+] SIZE: " +str(size))
 
-            content = ""
-            i = 0
             while to_print:
                 content = to_print[:re_size['chunck']]
-                title = md5(content[:10].encode()).hexdigest()
+                title = md5(content[:300].encode()).hexdigest()
                 self.map[i] = title
                 self.chunk_array.append({title: content})
                 self.split_print("> chunck: "+title)
