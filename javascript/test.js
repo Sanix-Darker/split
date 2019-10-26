@@ -7,4 +7,7 @@ s.deCompose()
 
 // We can print the map of the file
 console.log(s.getMap())
-// console.log("cc.map: ", cc.map)
+
+
+//Let's ReMake in another file, the delete_residual parameter will delete all chunks
+s.reMake("../data_test/file2.png", s.map, "../chunks/", true)

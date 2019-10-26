@@ -11,4 +11,4 @@ s.deCompose()
 print(s.getMap())
 
 # Let's ReMake in another file, the delete_residual parameter will delete all chunks
-s.reMake("../data_test/file2.png", s.map, "../chunks/", delete_residuals=True)
+s.reMake("../data_test/file2.png", s.getMap(), "../chunks/", delete_residuals=True)

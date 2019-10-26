@@ -1,6 +1,11 @@
-# Split-Python
+# SPLIT-PYTHON
 
 An implementation of Split in Python
+
+
+## Requirements
+
+ANY REQUIREMENTS NEEDED !
 
 
 ## How to use

@@ -1,60 +1,46 @@
-# CODEC-JAVASCRIPT
+# SPLIT-JAVASCRIPT
 
-This is an implementation of codec for a codec-client in Javascript.
+This is an implementation of Split in Javascript.
 
-## How to use
+## How to install
 
-- Copy and paste the codec directory in your project
+- Copy and paste the Split directory in your project
 
-- install `axios` and `fs`, codec need them to work (`yarn install` will install them).
+- install  `fs`, Split need them to work (`yarn install` will install them).
 ```json
   "dependencies": {
-    "axios": "^0.19.0",
     "fs": "^0.0.1-security"
   }
 ```
 
+## How to use
 
-- In your code follow theese instructions:
+As follow, this is the content of the test script:
 
 ```javascript
-// First you import Codec
-import Codec from "./codec"
+import Split from "./Split"
 
-// You instantiate codec with the link of the API
-let cc = new Codec()
+// The path and the debug parameter, not required
+let s = new Split("../data_test/file.png", true)
 
-cc.setCodecApiUrl("http://127.0.0.1:7171")
+// We decompose the file in multiple chunks
+s.deCompose()
 
-// You can get the message error, lang is not required as default it's en
-cc.getMessage("PAC005", "fr").then(message => {
-    console.log("getMessage: ", message)
-})
+// We can print the map of the file
+console.log(s.getMap())
 
-// You can get the description error, lang is not required as default it's en
-cc.getDescription("PAC004").then(message => {
-    console.log("getDescription: ", message)
-})
 
-// You can get the concerned microservice
-cc.getMicroservice("PAC004").then(message => {
-    console.log("getMicroservice: ", message)
-})
-
-// You can check if it's an error or not
-cc.isException("PAC004").then(message => {
-    console.log("isException: ", message)
-})
+//Let's ReMake in another file, the delete_residual parameter will delete all chunks(as true)
+s.reMake("../data_test/file2.png", s.map, "../chunks/", true)
 ```
 
-## How to test
+## Tests
 
-Note that you Codec API most been running before test codec-client
-The fetch will be done "ONCE" if a local database is not detected
-To test, you can run :
+To test, just run this in your CLI:
 ```shell
 yarn start
 ```
 
 ## Author
-- Sanix darker (Ange SAADJIO)
+
+- Sanix-darker

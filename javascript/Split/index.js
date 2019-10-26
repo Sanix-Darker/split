@@ -132,15 +132,19 @@ class Split {
     reMake(final_path, map_, chunk_path, delete_residuals=false){
         this.split_print("[+] Remake started...")
         try{
-            let file_content_string =""
-            for(let i=0; i<map_.length; i++){
-                file_content_string += fs.readFileSync(chunk_path+map_[i])
-                if (delete_residuals == true){
-                    fs.unlinkSync(chunk_path+map_[i])
+            let file_content_string = ""
+            for (let property in map_) {
+                if (map_.hasOwnProperty(property)) {
+                  // Do things here
+                    file_content_string += fs.readFileSync(chunk_path+map_[property])
+
+                    if (delete_residuals == true){
+                        fs.unlinkSync(chunk_path+map_[property])
+                    }
                 }
             }
-            let file_content=new B64().b64decode(file_content_string)
-            fs.writeFile(final_path, file_content, 'base64', function(err) { console.log(err); });
+            fs.writeFile(final_path, file_content_string, {encoding: 'base64'}, function(err) { console.log('File created'); });
+
             this.split_print("[+] Remake done.")
         }catch(err){
             console.log(err)

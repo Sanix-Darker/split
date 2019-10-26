@@ -1,7 +1,7 @@
 class B64{
 
     b64encode(str){
-        return Buffer.from("Hello World").toString('base64')
+        return Buffer.from(str).toString('base64')
     }
 
     _base64ToArrayBuffer(base64) {
@@ -13,8 +13,8 @@ class B64{
         }
         return bytes.buffer;
     }
-    b64decode(){
-        return _base64ToArrayBuffer(base64)
+    b64decode(base64){
+        return this._base64ToArrayBuffer(base64)
     }
 }
 
