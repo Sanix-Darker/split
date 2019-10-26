@@ -5,7 +5,7 @@ from os import remove
 
 class Split:
 
-    def __init__(self, FILENAME, DEBUG_MODE = False, MAXIMUM_SIZE_PER_CHUNK = 300000, MINIMUM_NUMBER_OF_CHUNK = 3):
+    def __init__(self, FILENAME, DEBUG_MODE = False, MAXIMUM_SIZE_PER_CHUNK = 700000, MINIMUM_NUMBER_OF_CHUNK = 7):
         self.DEBUG_MODE = DEBUG_MODE
         self.FILENAME = FILENAME
         self.MAXIMUM_SIZE_PER_CHUNK = MAXIMUM_SIZE_PER_CHUNK
@@ -67,15 +67,15 @@ class Split:
         Returns:
             [type] -- [description]
         """
-        ancien_pri = 9999999
-        ancien_chunck = 0
+        ancien_pri = 999999
+        ancien_chunck = 1
         for pri in prime_array:
-            if val%pri == 0:
-                if (int(pri) >= self.MINIMUM_NUMBER_OF_CHUNK and int(pri) <= ancien_pri and int(val/pri) < self.MAXIMUM_SIZE_PER_CHUNK):
-                    ancien_pri = int(pri)
-                    ancien_chunck = int(val/pri)
-                    self.split_print({ "size": ancien_pri, "chunck": ancien_chunck })
-                    break
+            if val%pri == 0 and pri >= self.MINIMUM_NUMBER_OF_CHUNK and val/pri < self.MAXIMUM_SIZE_PER_CHUNK:
+                ancien_pri = int(pri)
+                ancien_chunck = int(val/pri)
+                self.split_print({ "size": ancien_pri, "chunck": ancien_chunck })
+                self.divide(ancien_chunck)
+
         return { "size": ancien_pri, "chunck": ancien_chunck }
 
 
@@ -104,6 +104,7 @@ class Split:
             map_ {[type]} -- [description]
             chunk_path {[type]} -- [description]
         """
+        map_ = {int(k):v for k,v in map_.items()}
         self.split_print("[+] Remake started...")
         try:
             file_content_string =""
@@ -115,7 +116,7 @@ class Split:
                 f.write(file_content)
             self.split_print("[+] Remake done.")
         except Exception as e:
-            print(str(e))
+            print(e)
             self.split_print("[+] Remake went wrong.")
 
 
@@ -130,9 +131,6 @@ class Split:
             re_size = self.verify_size_content(re_size_val)
 
             self.split_print("[+] SIZE: " +str(size))
-            self.split_print("[+] RE_SIZE: " +str(re_size_val))
-            self.split_print("[+] CONTENT_PER_CHUNKCS: " +str(re_size['chunck']))
-            self.split_print("[+] COUNT_OF_CHUNCK: " +str(re_size['size']))
 
             content = ""
             i = 0

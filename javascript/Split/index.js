@@ -6,7 +6,7 @@ let md5 = require("./md5.js")
 const prime_array = prime_array_list()
 class Split {
 
-    constructor(FILENAME, DEBUG_MODE = false, MAXIMUM_SIZE_PER_CHUNK = 300000, MINIMUM_NUMBER_OF_CHUNK = 3) {
+    constructor(FILENAME, DEBUG_MODE = false, MAXIMUM_SIZE_PER_CHUNK = 700000, MINIMUM_NUMBER_OF_CHUNK = 7) {
         this.DEBUG_MODE = DEBUG_MODE
         this.FILENAME = FILENAME
         this.MAXIMUM_SIZE_PER_CHUNK = MAXIMUM_SIZE_PER_CHUNK
@@ -82,17 +82,15 @@ class Split {
     // """
     divide(val){
 
-        let ancien_pri = 9999999
-        let ancien_chunck = 0
+        let ancien_pri = 999999
+        let ancien_chunck = 1
         for(let i =0; i<prime_array.length; i++){
             const pri = prime_array[i]
-            if (val%pri == 0){
-                if (pri >= this.MINIMUM_NUMBER_OF_CHUNK && pri <= ancien_pri && (val/pri) < this.MAXIMUM_SIZE_PER_CHUNK){
-                    ancien_pri = pri
-                    ancien_chunck = (val/pri)
-                    this.split_print({ "size": ancien_pri, "chunck": ancien_chunck })
-                    break
-                }
+            if (val%pri == 0 && pri >= this.MINIMUM_NUMBER_OF_CHUNK && pri <= ancien_pri && (val/pri) < this.MAXIMUM_SIZE_PER_CHUNK){
+                ancien_pri = pri
+                ancien_chunck = (val/pri)
+                this.split_print({ "size": ancien_pri, "chunck": ancien_chunck })
+                this.divide(ancien_chunck)
             }
         }
 
@@ -164,10 +162,6 @@ class Split {
         let re_size = this.verify_size_content(re_size_val)
 
         this.split_print("[+] SIZE: " +size)
-        this.split_print("[+] RE_SIZE: ")
-        this.split_print(re_size_val)
-        this.split_print("[+] CONTENT_PER_CHUNKCS: " +re_size['chunck'])
-        this.split_print("[+] COUNT_OF_CHUNCK: " +re_size['size'])
 
         let content = ""
         let i = 0
