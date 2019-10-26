@@ -1,4 +1,4 @@
-<img src="./logo.png">
+<img src="./logo.png" width="90">
 
 # SPLIT
 
@@ -16,8 +16,8 @@ All examples of implementations are done in each versions, for more details cont
 
 ## Some videos
 
-- [Demo1](https://www.loom.com/share/b747ec30558641d687af1430e9833cd6)
-- [Demo2](https://www.loom.com/share/dd9ab627f17747ff84facd639a9ca46b)
+- [Demo1, presentation](https://www.loom.com/share/b747ec30558641d687af1430e9833cd6)
+- [Demo2, some tests](https://www.loom.com/share/dd9ab627f17747ff84facd639a9ca46b)
 
 ## Author
 
