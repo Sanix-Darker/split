@@ -181,7 +181,6 @@ class Split {
             this.split_print("> chunck: "+title)
             // Optionnal, to saved the chunks
             fs.writeFileSync("../chunks/"+title, content)
-            console.log("Writing in : "+ "../chunks/"+title)
             // Optionnal, to saved the chunks
         }
         this.split_print("[+] Decompose done.")

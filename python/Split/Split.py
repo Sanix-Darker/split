@@ -148,7 +148,6 @@ class Split:
                 self.split_print("> chunck: "+title)
                 # Optionnal, to saved the chunks
                 with open("../chunks/"+title,"w+") as file:
-                    print("Writing in : "+ "../chunks/"+title)
                     file.write(content)
                 # Optionnal, to saved the chunks
                 to_print = to_print[re_size['chunck']:]
