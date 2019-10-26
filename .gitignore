@@ -5,4 +5,7 @@
 *.flv
 *.mkv
 *.sp
+*.png
+*.jpg
+*.gif
 chunks/*
