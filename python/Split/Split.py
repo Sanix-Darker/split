@@ -13,6 +13,47 @@ class Split:
         self.map = {}
         self.chunk_array = []
 
+
+    # Getter/setter for DEBUG_MODE
+    def getDEBUG_MODE(self):
+        return self.DEBUG_MODE
+    def setDEBUG_MODE(self, m):
+        self.DEBUG_MODE = m
+
+    # Getter/setter for FILENAME
+    def getFILENAME(self):
+        return self.FILENAME
+    def setFILENAME(self, m):
+        self.FILENAME = m
+
+    # Getter/setter for MAXIMUM_SIZE_PER_CHUNK
+    def getMAXIMUM_SIZE_PER_CHUNK(self):
+        return self.MAXIMUM_SIZE_PER_CHUNK
+    def setMAXIMUM_SIZE_PER_CHUNK(self, m):
+        self.MAXIMUM_SIZE_PER_CHUNK = m
+
+
+    # Getter/setter for MINIMUM_NUMBER_OF_CHUNK
+    def getMINIMUM_NUMBER_OF_CHUNK(self):
+        return self.MINIMUM_NUMBER_OF_CHUNK
+    def setMINIMUM_NUMBER_OF_CHUNK(self, m):
+        self.MINIMUM_NUMBER_OF_CHUNK = m
+
+
+    # Getter/setter for map
+    def getMap(self):
+        return self.map
+    def setMap(self, m):
+        self.map = m
+
+
+    # Getter/setter for chunk_array
+    def getChunk_array(self):
+        return self.chunk_array
+    def setChunk_array(self, m):
+        self.chunk_array = m
+
+
     def split_print(self, obj):
         if self.DEBUG_MODE == True:
             print(obj)

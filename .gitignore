@@ -9,3 +9,4 @@
 *.jpg
 *.gif
 chunks/*
+*node_modules*
