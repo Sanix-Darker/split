@@ -1,3 +1,9 @@
+#
+# Split Class
+# A module to decompose and reMake a file based on a map and chuncks
+# By Sanix-darker
+#
+
 import base64 as b64
 from hashlib import md5
 from .primes import prime_array

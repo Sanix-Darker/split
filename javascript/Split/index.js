@@ -1,3 +1,9 @@
+/**
+ * Split Class
+ * A module to decompose and reMake a file based on a map and chuncks
+ * By Sanix-darker
+*/
+
 import fs from "fs";
 import B64 from "./mabase64"
 import prime_array_list from "./primes"
