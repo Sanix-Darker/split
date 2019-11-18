@@ -10,3 +10,4 @@ data_test
 *.gif
 chunks/*
 *node_modules*
+.vscode
