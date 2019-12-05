@@ -1,6 +1,6 @@
 import binascii
 
-filename = './file.png'
+filename = './logo.png'
 with open(filename, 'rb') as f:
     content = f.read()
 val = binascii.hexlify(content)

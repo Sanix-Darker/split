@@ -14,10 +14,24 @@ SPLIT is a FROM SCRATCH module able to decompose and recompose a file based on a
 All examples of implementations are done in each versions, for more details contact the Author.
 
 
-## Some videos
+#### Example Usage
 
-- [Demo1, presentation](https://www.loom.com/share/b747ec30558641d687af1430e9833cd6)
-- [Demo2, some tests](https://www.loom.com/share/dd9ab627f17747ff84facd639a9ca46b)
+```python
+# We import the module
+from Split import Split
+
+# We instantiate and pass the path of the file we ant to split, the debug mode is just to see logs
+s = Split.Split("../data_test/rrr.mp4", DEBUG_MODE=True)
+
+# We decompose the file in multiple chunks
+s.deCompose()
+
+# We can print the map of the file
+print(s.getMap())
+
+# Let's ReMake in another file, the delete_residual parameter will delete all chunks
+s.reMake("../data_test/rrr2.mp4", s.getMap(), "../chunks/", delete_residuals=True)
+```
 
 #### OUTPUT EXAMPLE
 
@@ -37,7 +51,6 @@ All examples of implementations are done in each versions, for more details cont
 {0: '45a9d1e4da1b86b7d052e1d8bec54052', 1: '9a6ad3724b5efb40f30e4130480535ea', 2: '5fd2104117efd1300b7cbb9508c5e5ee', 3: 'ab61142db3239a5dfbe402ced841cace'}
 [+] Remake started...
 [+] Remake done.
-
 ```
 
 ## Author
