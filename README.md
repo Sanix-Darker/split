@@ -17,7 +17,7 @@ All examples of implementations are done in each versions, for more details cont
 #### Example Usage
 
 ```python
-# We import the module
+# We import the Class/module
 from Split import Split
 
 # We instantiate and pass the path of the file we ant to split, the debug mode is just to see logs

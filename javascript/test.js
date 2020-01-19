@@ -1,3 +1,4 @@
+// We import the Class/Module
 import Split from "./Split"
 
 let s = new Split("../data_test/test.mp4", true)
