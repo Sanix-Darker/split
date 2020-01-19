@@ -53,6 +53,10 @@ s.reMake("../data_test/rrr2.mp4", s.getMap(), "../chunks/", delete_residuals=Tru
 [+] Remake done.
 ```
 
+#### DEMO GIFT
+
+<img src="./images/split.gif" />
+
 ## Author
 
 - Sanix-darker
