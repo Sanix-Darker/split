@@ -11,3 +11,4 @@ data_test
 chunks/*
 *node_modules*
 .vscode
+.idea
