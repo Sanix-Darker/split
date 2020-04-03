@@ -1,5 +1,5 @@
 # We import the Class/module
-from python.Split import Split
+from Split import Split
 
 # FILE_FOR_RECOMPOSE = "../data_test/rrr2.mp4"
 

@@ -6,8 +6,8 @@
 
 import base64 as b64
 from hashlib import md5
-from .primes import prime_array
-from os import remove, path, makedirs
+from primes import prime_array
+from os import remove, path, makedirs, system
 
 
 class Split:
@@ -139,6 +139,8 @@ class Split:
                 self.map[i] = title
                 self.chunk_array.append({title: content})
                 print("> chunck: " + title)
+
+                system("mkdir ../chunks/")
                 # Optionnal, to saved the chunks
                 with open("../chunks/" + title, "w+") as file:
                     file.write(content)
